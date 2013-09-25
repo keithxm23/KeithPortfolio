@@ -4,6 +4,8 @@ GEM
   specs:
     newrelic_rpm (3.6.7.159)
     rack (1.5.2)
+    vienna (0.4.0)
+      rack (~> 1.5)
 
 PLATFORMS
   ruby
@@ -11,3 +13,4 @@ PLATFORMS
 DEPENDENCIES
   newrelic_rpm
   rack
+  vienna

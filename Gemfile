@@ -5,3 +5,4 @@ source "https://rubygems.org"
 source :rubygems
 gem 'rack'
 gem 'newrelic_rpm'
+gem 'vienna'
