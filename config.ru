@@ -1,7 +1,8 @@
+""" try later
 require 'vienna'
 run Vienna
-
 """
+
 use Rack::Static, 
   :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin"],
   :root => "public"
@@ -16,4 +17,3 @@ run lambda { |env|
     File.open('public/index.html', File::RDONLY)
   ]
 }
-"""
