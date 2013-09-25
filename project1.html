@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Keith Mascarenhas</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="quivee" name="description">
+        <meta content="playlab" name="author">
+        
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'> 
+        <!-- Bootstrap  -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!-- Font Awesome  -->
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        
+        <link href="css/colors.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/responsive.css" rel="stylesheet"> 
+        
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+      	<script src="js/html5shiv.js"></script>
+    	<![endif]-->
+    </head>
+    <body class="page-red">
+
+		<div class="container member-profile">
+			<div class="row">
+				<div class="span4 offset1 text-center full-profile">
+					<img src="images/fplassistant.png" alt="image" />
+					<ul class="unstyled inline mar-t30">
+						<li><a href="https://github.com/keithxm23/fplassistant" title="View code on GitHub"><i class="icon-github"></i></a></li>
+						<li><a href="https://github.com/keithxm23/fplscraper" title="View code on GitHub"><i class="icon-github"></i></a></li>
+						<li><a href="http://www.fplassistant.com/" title="View Application Website"><i class="icon-external-link"></i></a></li>
+					</ul>
+				</div>
+				<div class="span6 full-profile">
+					<h1 class="member-name">Fantasy Premier League Assistant</h1>
+					<p class="member-role"> August 2013 to Present</p>
+					
+					<h3>A Rails app that scrapes the Fantasy League site and uses a multi-dimensional knapsack to pick the 
+						optimal team. Also uses Machine Learning algorithms to predict player performances so as to pick a better team.
+					</h3>
+
+					<p><strong>Skills</strong></p>
+					<div class="progress">
+						<span>Rails</span>
+					    <div class="bar" style="width: 0%;" data-percentage="75"></div>
+					</div>
+					<div class="progress">
+						<span>Machine Learning</span>
+					    <div class="bar" style="width: 0%;" data-percentage="80"></div>
+					</div>
+					<div class="progress">
+						<span>jQuery</span>
+					    <div class="bar" style="width: 0%;" data-percentage="95"></div>
+					</div>
+					
+					<p>
+						Wrote a Python script that scrapes the Fantasy Premier League website (http://fantasy.premierleague.com/) for player details and stores it in JSON.
+					</p>
+					
+					<p>
+						Developed an application in Rails that parses the above JSON data, dumps it to Heroku's Postgres db and then creates a jquery based data-grid (jQGrid) which enables FPL managers to pick better teams and then deployed this application to Heroku
+					</p>
+					
+					<p>
+						Utilized flotcharts to plot Javascript based charts about interesting information about upcoming players and teams.
+					</p>
+					
+					<p>
+						Future features include using a multi-dimensional knapsack to pick the best team given a heuristic and then later using Machine Learning to predict player points and pick better teams
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- Javascript  -->
+		<!-- Javascript  -->
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript">
+			$('.bar').css('width',  function(){ return ($(this).attr('data-percentage')+'%')});
+		</script>
+    </body>
+</html>
+
+
