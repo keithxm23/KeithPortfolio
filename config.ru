@@ -3,7 +3,7 @@ require 'vienna'
 run Vienna
 """
 use Rack::Static, 
-  :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin"],
+:urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin", "/pages"],
   :root => "public"
 
 
@@ -17,4 +17,3 @@ run lambda { |env|
     File.open('public/index.html', File::RDONLY)
   ]
 }
-run Rack::Directory.new("public")
