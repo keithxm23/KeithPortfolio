@@ -17,7 +17,4 @@ run lambda { |env|
     File.open('public/index.html', File::RDONLY)
   ]
 }
-
-map "/resume.pdf" do
-  run Rack::File.new("resume.pdf")
-end
+run Rack::Directory.new("public")
