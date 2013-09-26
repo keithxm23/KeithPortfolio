@@ -5,7 +5,7 @@ run Vienna
 
 use Rack::Static, 
   :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin", 
-    "/projet1.html", "/projet2.html", "/projet3.html", "/resume.pdf"],
+    "/project1.html", "/project2.html", "/project3.html", "/resume.pdf"],
   :root => "public"
 
 run lambda { |env|
