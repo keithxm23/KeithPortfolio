@@ -2,19 +2,10 @@
 require 'vienna'
 run Vienna
 """
-"""
 use Rack::Static, 
-  :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin", 
-    "/project1.html", "/project2.html", "/project3.html", "/resume.pdf"],
+  :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin"],
   :root => "public"
-"""
-use Rack::TryStatic, 
-    root: "public",  # static files root dir
-    urls: %w[/],     # match all requests 
-    try: ['.html', 'index.html', '/index.html'] # try these postfixes sequentially
 
-# otherwise 404 NotFound
-run lambda { [404, {'Content-Type' => 'text/html'}, ['whoops! Not Found']]}
 
 run lambda { |env|
   [
@@ -27,3 +18,6 @@ run lambda { |env|
   ]
 }
 
+map "/resume.pdf" do
+  run Rack::File.new("resume.pdf")
+end
