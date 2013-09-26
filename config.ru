@@ -3,7 +3,7 @@ require 'vienna'
 run Vienna
 """
 use Rack::Static, 
-  :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin"],
+  :urls => ["/images", "/font", "/js", "/css", "/ico", "/dark-skin", "/resume.pdf"],
   :root => "public"
 
 
