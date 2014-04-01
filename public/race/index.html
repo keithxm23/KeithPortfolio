@@ -74,8 +74,8 @@ $(function () {
   <body>
     <script src="js/highcharts.js"></script>
     <script src="js/modules/exporting.js"></script>
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div align="center">
+    <div id="container" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+    <div id="startbutton" align="center">
       <a id="start" class="button">Begin</a>
     </div>
   </body>
@@ -105,6 +105,7 @@ $(function () {
                   ];
 
   function updateChart(){
+    $("#startbutton").hide();
     var chart = $("#container").highcharts();
     var gw=-1;
     (function nextWeek(){
@@ -129,7 +130,6 @@ $(function () {
         }
       }, 1500);
     })();
-
   }
 
 
