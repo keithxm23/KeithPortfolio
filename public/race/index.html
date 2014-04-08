@@ -76,10 +76,15 @@ $(function () {
                 valueSuffix: ' points'
             },
             plotOptions: {
+                series: {
+                  stacking: 'normal'
+                },
+
                 bar: {
+                    borderWidth: 0,
                     colorByPoint: true,
                     dataLabels: {
-                        enabled: true
+                        enabled: false
                     },
                     animation: false
                 }
@@ -89,6 +94,17 @@ $(function () {
                 enabled: false
             },
             series: [{
+                name: 'Additional points possible after the same number of games',
+                data: [ 0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0,
+                        0, 0
+                      ]
+            },
+            {
                 name: 'Points',
                 data: [ 0, 0, 0,
                         0, 0, 0,
@@ -98,7 +114,8 @@ $(function () {
                         0, 0, 0,
                         0, 0
                       ]
-            }]
+            }
+            ]
         });
     });
     </script>
@@ -112,7 +129,7 @@ $(function () {
     </div>
     <div id="lastupdated" style='font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 font-size: 12px;"'>
-      Last updated on: Tue Apr  8 12:48:33 EDT 2014
+      Last updated on: Tue Apr  8 16:15:16 EDT 2014
     </div>
     <div id="counter">
             <!-- hitwebcounter Code START -->
@@ -136,14 +153,28 @@ font-size: 12px;"'>
         if (gw++ < 32){//TODO: Calculate this number by getting max array size among all teams
 
           var gameweekdata = [];
+          var pendingmatches = [];
           for (var team=0;team<20;team++){//TODO: Not always 20, so calculate this as length of teamData obj
             var datapoint = {};
-            datapoint['color'] = getColor(teamData[keys[team][0]]['color']);
+            datapoint['color'] = 'rgba('+teamData[keys[team][0]]['color']+',1.0)';
             datapoint['y'] = teamData[keys[team][0]]['points'][gw] !== undefined ? teamData[keys[team][0]]['points'][gw] : teamData[keys[team][0]]['points'][teamData[keys[team][0]]['points'].length-1];
+            var pointspossible = {'color': 'rgba('+teamData[keys[team][0]]['color']+',0.5)',
+                              y: (gw-teamData[keys[team][0]]['points'].length+1)*3 < 0 ? 0 : (gw-teamData[keys[team][0]]['points'].length+1)*3
+                            }
+
+            pendingmatches.push(pointspossible)
             gameweekdata.push(datapoint);
           }
           //console.log(gw);
-          chart.series[0].setData(gameweekdata);
+          /*
+          chart.addSeries({
+                data: gameweekdata,
+                index: 33-gw,
+                zIndex: 33-gw
+            });
+          */
+          chart.series[1].setData(gameweekdata);
+          chart.series[0].setData(pendingmatches);
           chart.setTitle({text: "Matchday "+(gw+1)});
           nextWeek();
 
@@ -152,9 +183,6 @@ font-size: 12px;"'>
     })();
   }
 
-  function getColor(rgbvals){//TODO set opacity based on win loss or draw
-    return 'rgba('+rgbvals+',1.0)';
-  }
 
   $(document).ready(function(){
     $("#start").click(function(){
