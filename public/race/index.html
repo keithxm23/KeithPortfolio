@@ -158,7 +158,7 @@ font-size: 12px;"'>
             var datapoint = {};
             datapoint['color'] = 'rgba('+teamData[keys[team][0]]['color']+',1.0)';
             datapoint['y'] = teamData[keys[team][0]]['points'][gw] !== undefined ? teamData[keys[team][0]]['points'][gw] : teamData[keys[team][0]]['points'][teamData[keys[team][0]]['points'].length-1];
-            var pointspossible = {'color': 'rgba('+teamData[keys[team][0]]['color']+',0.5)',
+            var pointspossible = {'color': 'rgba('+teamData[keys[team][0]]['color']+',0.33)',
                               y: (gw-teamData[keys[team][0]]['points'].length+1)*3 < 0 ? 0 : (gw-teamData[keys[team][0]]['points'].length+1)*3
                             }
 
@@ -179,7 +179,7 @@ font-size: 12px;"'>
           nextWeek();
 
         }
-      }, 500);
+      }, 1500);
     })();
   }
 
