@@ -127,15 +127,22 @@ $(function () {
     <script src="js/highcharts.js"></script>
     <script src="js/modules/exporting.js"></script>
     <div id="container" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
-    <div id="startbutton" align="center">
-      <a id="start" class="button">Begin</a>
+
+    <div id="slider-container">
+      <div id="slider"></div>
     </div>
 
-    <div id="slider"></div>
+    <div id="startbutton" align="center">
+      <a id="start" class="button">Begin</a>
+      <input id="speed" type="number" value="1500" min="500" name="Speed in ms">
+      <p id="help">
+        Please enter an interval value in milliseconds of 500 or higher. 1500ms usually works well between each tick.
+      </p>
+    </div>
 
     <div id="lastupdated" style='font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 font-size: 12px;"'>
-      Last updated on: Tue Apr  8 16:15:16 EDT 2014
+      Last updated on: Mon Apr 14 19:37:19 EDT 2014
     </div>
     <div id="counter">
             <!-- hitwebcounter Code START -->
@@ -151,6 +158,17 @@ font-size: 12px;"'>
   </body>
   <script>
 
+  function getSpeed(){
+    var speed_string = $("#speed").val();
+    try{
+      var speed_int = parseInt(speed_string);
+    }
+    catch (Error){
+      var speed_int = 1500;
+    }
+    return speed_int;
+  }
+
   function updateChart(){
     $("#startbutton").hide();
     var gw=0;
@@ -159,8 +177,11 @@ font-size: 12px;"'>
         $("#slider").slider('value', gw);
         if (gw++ < 33){
           nextWeek();
+        }
+        else{
+          $("#startbutton").show();
         }      
-      }, 1500);
+      }, getSpeed());
     })();
   }
 
@@ -206,14 +227,38 @@ font-size: 12px;"'>
         $( "#slider-value" ).html( ui.value );
           updateToWeek(ui.value);
       }
+    }).each(function() {
+      //
+      // Add labels to slider whose values 
+      // are specified by min, max and whose
+      // step is set to 1
+      //
+      // Get the options for this slider
+      var opt = $(this).data().uiSlider.options;
+      // Get the number of possible values
+      var vals = opt.max - opt.min;
+      // Space out values
+      for (var i = 0; i <= vals; i++) {
+        var el = $('<label>'+(i)+'</label>').css('left',(i/vals*100)+'%');
+        $( "#slider" ).append(el);
+      }
     });
 
     $( "#slider-value" ).html(  $('#slider').slider('value') );
 
-
     $("#start").click(function(){
       updateChart();
     });
+  });
+
+  $('#speed').blur('input', function() {
+    // do something
+    if(!this.checkValidity())
+    {
+      //alert("Please enter a valid interval in milliseconds!");
+      this.focus();
+      $(this).val(1500);
+    }
   });
 
   </script>
@@ -234,7 +279,24 @@ font-size: 12px;"'>
   <!-- END Google Analytics code -->
 
   <style type="text/css">
-    .button {
+    #slider label {
+      position: absolute;
+      width: 20px;
+      margin-left: -10px;
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-size: 11px;
+    }
+
+    #slider-container {
+      padding-bottom: 45px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+
+     .button {
     	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
     	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
     	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -270,6 +332,35 @@ font-size: 12px;"'>
     }.button:active {
     	position:relative;
     	top:1px;
+    }
+
+    #speed{
+      text-indent:0;
+      border:1px solid #dcdcdc;
+      display:inline-block;
+      color:#777777;
+      font-family:arial;
+      font-size:15px;
+      font-weight:bold;
+      font-style:normal;
+      height:50px;
+      line-height:50px;
+      width:100px;
+      text-decoration:none;
+      text-align:center;
+      text-shadow:1px 1px 0px #ffffff;
+    }
+
+    #help{
+      text-indent:0;
+      color:#777777;
+      font-family:arial;
+      font-size:15px;
+      font-style:normal;
+      height:50px;
+      text-decoration:none;
+      text-align:center;
+      text-shadow:1px 1px 0px #ffffff;
     }
   </style>
 
