@@ -6,6 +6,9 @@
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
     <script type="text/javascript">
 
       var teamData = {
@@ -127,6 +130,9 @@ $(function () {
     <div id="startbutton" align="center">
       <a id="start" class="button">Begin</a>
     </div>
+
+    <div id="slider"></div>
+
     <div id="lastupdated" style='font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 font-size: 12px;"'>
       Last updated on: Tue Apr  8 16:15:16 EDT 2014
@@ -144,47 +150,67 @@ font-size: 12px;"'>
     </div>
   </body>
   <script>
+
   function updateChart(){
     $("#startbutton").hide();
-    var chart = $("#container").highcharts();
-    var gw=-1;
+    var gw=0;
     (function nextWeek(){
       setTimeout(function(){
-        if (gw++ < 33){//TODO: Calculate this number by getting max array size among all teams
-
-          var gameweekdata = [];
-          var pendingmatches = [];
-          for (var team=0;team<20;team++){//TODO: Not always 20, so calculate this as length of teamData obj
-            var datapoint = {};
-            datapoint['color'] = 'rgba('+teamData[keys[team][0]]['color']+',1.0)';
-            datapoint['y'] = teamData[keys[team][0]]['points'][gw] !== undefined ? teamData[keys[team][0]]['points'][gw] : teamData[keys[team][0]]['points'][teamData[keys[team][0]]['points'].length-1];
-            var pointspossible = {'color': 'rgba('+teamData[keys[team][0]]['color']+',0.33)',
-                              y: (gw-teamData[keys[team][0]]['points'].length+1)*3 < 0 ? 0 : (gw-teamData[keys[team][0]]['points'].length+1)*3
-                            }
-
-            pendingmatches.push(pointspossible)
-            gameweekdata.push(datapoint);
-          }
-          //console.log(gw);
-          /*
-          chart.addSeries({
-                data: gameweekdata,
-                index: 33-gw,
-                zIndex: 33-gw
-            });
-          */
-          chart.series[1].setData(gameweekdata);
-          chart.series[0].setData(pendingmatches);
-          chart.setTitle({text: "Matchday "+(gw+1)});
+        $("#slider").slider('value', gw);
+        if (gw++ < 33){
           nextWeek();
-
-        }
+        }      
       }, 1500);
     })();
   }
 
+  function updateToWeek(gw){
+    var chart = $("#container").highcharts();
+    if (gw == -1){
+      chart.series[1].setData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+      chart.series[0].setData([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);
+      chart.setTitle({text: "Matchday "+(gw+1)});
+    }
+    else if (gw <= 33){//TODO: Calculate this number by getting max array size among all teams
+      var gameweekdata = [];
+      var pendingmatches = [];
+      for (var team=0;team<20;team++){//TODO: Not always 20, so calculate this as length of teamData obj
+        var datapoint = {};
+        datapoint['color'] = 'rgba('+teamData[keys[team][0]]['color']+',1.0)';
+        datapoint['y'] = teamData[keys[team][0]]['points'][gw] !== undefined ? teamData[keys[team][0]]['points'][gw] : teamData[keys[team][0]]['points'][teamData[keys[team][0]]['points'].length-1];
+        var pointspossible = {'color': 'rgba('+teamData[keys[team][0]]['color']+',0.33)',
+                          y: (gw-teamData[keys[team][0]]['points'].length+1)*3 < 0 ? 0 : (gw-teamData[keys[team][0]]['points'].length+1)*3
+                        }
+        pendingmatches.push(pointspossible)
+        gameweekdata.push(datapoint);
+      }
+      chart.series[1].setData(gameweekdata);
+      chart.series[0].setData(pendingmatches);
+      chart.setTitle({text: "Matchday "+(gw+1)});
+    }
+  }
 
   $(document).ready(function(){
+
+    $("#slider").slider({
+      value:-1,
+      min: -1,
+      max: 33,
+      step: 1,
+      animate: "fast",
+      slide: function( event, ui ) {
+        $( "#slider-value" ).html( ui.value );
+        updateToWeek(ui.value);
+      },
+      change: function( event, ui ) {
+        $( "#slider-value" ).html( ui.value );
+          updateToWeek(ui.value);
+      }
+    });
+
+    $( "#slider-value" ).html(  $('#slider').slider('value') );
+
+
     $("#start").click(function(){
       updateChart();
     });
